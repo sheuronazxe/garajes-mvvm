@@ -1,7 +1,7 @@
 import sys, os, informes, formularios
 from os.path import exists
 from PyQt5.QtCore import QDate, QPersistentModelIndex, QSize, QSortFilterProxyModel, Qt
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtSql import QSqlDatabase, QSqlTableModel
 from PyQt5.QtWidgets import QApplication, QDateEdit, QGridLayout, QHeaderView, QMessageBox, QPushButton, QSizePolicy, QSpacerItem, QTableView, QWidget
 
@@ -15,11 +15,15 @@ class Ventana(QWidget):
         self.tabla.hideColumn(0)
         self.tabla.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
         self.tabla.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
-        self.tabla.setColumnWidth(4, 70)
+        self.tabla.setColumnWidth(2,170)
+        self.tabla.setColumnWidth(3,250)
+        self.tabla.setColumnWidth(4,80)
         self.tabla.verticalHeader().setVisible(False)
         self.tabla.setAlternatingRowColors(True)
         self.tabla.sortByColumn(1,Qt.AscendingOrder)
-
+        self.tabla.setFont(QFont("Calibri",14))
+        self.tabla.horizontalHeader().setStyleSheet("::section{ border: 0px; border-right: 1px solid silver; border-bottom: 2px solid steelblue; background-color: floralwhite; padding:4px }")
+        
         btn_añadir = QPushButton(" AÑADIR")
         btn_añadir.setToolTip("Nueva ficha")
         btn_añadir.setIcon(QIcon("iconos/anadir.svg"))
@@ -40,13 +44,13 @@ class Ventana(QWidget):
         self.fecha.setAlignment(Qt.AlignHCenter)
         self.fecha.setDate(QDate.currentDate().addMonths(1))
         self.fecha.setDisplayFormat("MMMM yyyy")
-        self.fecha.setStyleSheet("font: 18px; color: steelblue; background: floralwhite;")
-        self.fecha.setFixedSize(200, 40)
+        self.fecha.setStyleSheet("font: bold 22px; color: steelblue; background: floralwhite;")
+        self.fecha.setFixedSize(240, 50)
 
         btn_imprimir = QPushButton(" IMPRIMIR")
         btn_imprimir.setIcon(QIcon("iconos/impresion.svg"))
-        btn_imprimir.setStyleSheet("font: bold 20px; color: steelblue;")
-        btn_imprimir.setFixedSize(200, 40)
+        btn_imprimir.setStyleSheet("font: bold 22px; color: steelblue;")
+        btn_imprimir.setFixedSize(240, 50)
         btn_imprimir.clicked.connect(self.imprimir)
 
         mainLayout = QGridLayout(self)
@@ -124,6 +128,6 @@ if __name__ == '__main__':
     view = Ventana()
     view.setWindowTitle("Generador de recibos")
     view.setWindowIcon(QIcon("iconos/icono.svg"))
-    view.setFixedSize(700, 480)
+    view.setFixedSize(900, 600)
     view.show()
     sys.exit(app.exec()) 
